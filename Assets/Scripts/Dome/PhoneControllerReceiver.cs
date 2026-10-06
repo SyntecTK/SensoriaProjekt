@@ -18,6 +18,8 @@ public class PhoneControllerReceiver : MonoBehaviour
     public bool Touching { get; private set; }
     public bool Connected => Time.time - lastPacketTime < 1f;
 
+    [SerializeField] private SimpleRotater rotater;
+    
     UdpClient udp;
     Thread thread;
     volatile bool running;
