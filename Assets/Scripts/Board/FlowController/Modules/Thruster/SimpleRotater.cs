@@ -4,6 +4,7 @@ public class SimpleRotater : MonoBehaviour, IReferenceRigidbody, IHandleInput, I
 {
     public Rigidbody PhysicsRigidbody { get; set; }
     [SerializeField] private GetGamepadParameter inputLogic = new GetGamepadParameter();
+    [SerializeField] private PhoneControllerReceiver phoneMovement;
 
     [Header("Runtime Variables")]
     [SerializeField] private Vector3 RotThrottle = Vector3.zero;
@@ -27,13 +28,17 @@ public class SimpleRotater : MonoBehaviour, IReferenceRigidbody, IHandleInput, I
     }
     public void Simulate(float deltaTime)
     {
-        if (usesPhysicsRotation)
-        {
-            PhysicsRigidbody.AddRelativeTorque(RotThrottle * deltaTime, ForceMode.Impulse);
-        }
-        else
-        {
-            PhysicsRigidbody.transform.rotation = Quaternion.Euler(RotThrottle);
-        }
+        if (phoneMovement == null) return;
+
+        PhysicsRigidbody.transform.rotation = phoneMovement.Attitude;
+        
+        // if (usesPhysicsRotation)
+        // {
+        //     PhysicsRigidbody.AddRelativeTorque(RotThrottle * deltaTime, ForceMode.Impulse);
+        // }
+        // else
+        // {
+        //     PhysicsRigidbody.transform.rotation = Quaternion.Euler(RotThrottle);
+        // }
     }
 }
