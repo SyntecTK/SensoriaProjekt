@@ -80,6 +80,11 @@ public class SimpleMagnet : MonoBehaviour, IReferenceRigidbody, IHandleInput, IH
         }
         else
         {
+            if (groundData.HitTag == "Magnet")
+            {
+                magnetismShouldBeEngaged = true;
+            }
+
             magnetVector = - groundData.HitNormal * magnetStrength;
         }
 
@@ -113,6 +118,7 @@ public class SimpleMagnet : MonoBehaviour, IReferenceRigidbody, IHandleInput, IH
             if (!magnetismEngaged)  // Switch on
             {
                 magnetismEngaged = true;
+                Debug.Log("Magnetism Engaged");
                 BoostDuringMagnetState(true);
 
                 soundSystem?.HandleSound(1f, deltaTime);
@@ -123,6 +129,7 @@ public class SimpleMagnet : MonoBehaviour, IReferenceRigidbody, IHandleInput, IH
             if (magnetismEngaged)  // Switch off
             {
                 magnetismEngaged = false;
+                Debug.Log("Magnetism Disengaged");
                 BoostDuringMagnetState(false);
 
                 soundSystem?.HandleSound(0f, deltaTime);
@@ -157,7 +164,7 @@ public class SimpleMagnet : MonoBehaviour, IReferenceRigidbody, IHandleInput, IH
             var gravity = boostableObject.GetComponent<SimpleGravity>();
             if (gravity != null)
             {
-                gravity.IsOn = !engagesMagnetism;
+                //gravity.IsOn = !engagesMagnetism;
             }
         }        
     }

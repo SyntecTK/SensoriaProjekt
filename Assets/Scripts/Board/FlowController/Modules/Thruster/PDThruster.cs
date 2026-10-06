@@ -12,6 +12,7 @@ public class PDThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, IHan
     public float HeightFactor = 1f;
     public float AirborneFactor = 0f;
     public float Thrust = 0f;
+    private Vector3 groundNormal = Vector3.up;
 
 
     [Header("Settings")]
@@ -20,6 +21,7 @@ public class PDThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, IHan
     [SerializeField] private float maxThrust = 900f;
     [SerializeField] private bool isMaxSpeedClamped;
     [SerializeField] private float maxSpeed = 240f;
+    [SerializeField] private float riseForceMultiplier = 0.2f;
     [SerializeField] private float airborneTresholdFactor = 3f;
     [SerializeField] private float airborneMultiplyer = 2f;
 
@@ -49,7 +51,7 @@ public class PDThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, IHan
     public void HandleGroundData(in GroundData groundData, float targetFlightHeight, float deltaTime)
     {
         HeightFactor = groundData.Hit ? groundData.HitDistance / targetFlightHeight : 1000f;
-
+        groundNormal = groundData.Hit ? groundData.HitNormal : Vector3.up;
         AirborneFactor = HeightFactor < airborneTresholdFactor ? 1f : 0f;
 
         if (pdController != null)
@@ -83,7 +85,7 @@ public class PDThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, IHan
             {
                 float forwardSpeed = Vector3.Dot(PhysicsRigidbody.linearVelocity, transform.up);
 
-                Debug.Log($"Hover Speed: {forwardSpeed}");
+                //Debug.Log($"Hover Speed: {forwardSpeed}");
 
                 if (forwardSpeed > maxSpeed)
                 {
@@ -91,7 +93,10 @@ public class PDThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, IHan
                 }
             }
 
-            PhysicsRigidbody.AddForce(Thrust * transform.up * deltaTime, ForceMode.Impulse);
+            Vector3 force = Thrust * transform.up * deltaTime;
+            force = Vector3.Project(groundNormal * riseForceMultiplier * Thrust * deltaTime, force);
+
+            PhysicsRigidbody.AddForce(force, ForceMode.Impulse);
         }
     }
 
