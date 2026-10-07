@@ -33,6 +33,8 @@ public class CollectibleBehaviour : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            BoxCollider coll = GetComponent<BoxCollider>();
+            coll.enabled = false;
             Debug.Log("Player entered collectible trigger");
             StartCoroutine(Collect());
         }
@@ -41,6 +43,7 @@ public class CollectibleBehaviour : MonoBehaviour
     IEnumerator Collect()
     {
         GameManager.Instance.CollectibleCollected();
+
         audioSource.Play();
         meshRenderer.enabled = false;
 
