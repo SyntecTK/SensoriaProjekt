@@ -52,6 +52,9 @@ public class SimpleThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, 
             soundSystem.HandleSound(Thrust, deltaTime);
         }
 
+        //For Testing
+        Thrust = maxThrust;
+
         if (Thrust != 0f)
         {
             if (isMaxSpeedClamped)

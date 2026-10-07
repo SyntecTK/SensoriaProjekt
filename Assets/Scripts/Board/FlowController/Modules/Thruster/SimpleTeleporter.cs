@@ -125,6 +125,8 @@ public class SimpleTeleporter : MonoBehaviour, IHandleInput, IHandleRigidbodyDat
 
     private void TeleportToCheckpoint(bool isResettingVelocity = true, bool isResettingOffset = false)
     {
+        EventManager.Calibrate();
+
         referenceTransform.position = checkPointData.Position;
         referenceTransform.rotation = checkPointData.Rotation.normalized;
 
