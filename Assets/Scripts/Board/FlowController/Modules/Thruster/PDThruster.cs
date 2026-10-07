@@ -94,7 +94,9 @@ public class PDThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, IHan
             }
 
             Vector3 force = Thrust * transform.up * deltaTime;
-            force = Vector3.Project(groundNormal * riseForceMultiplier * Thrust * deltaTime, force);
+
+            force.y *= riseForceMultiplier;
+            //force = Vector3.Project(groundNormal * riseForceMultiplier * Thrust * deltaTime, force);
 
             PhysicsRigidbody.AddForce(force, ForceMode.Impulse);
         }
