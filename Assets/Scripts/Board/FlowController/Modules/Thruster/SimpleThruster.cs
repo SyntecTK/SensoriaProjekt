@@ -20,8 +20,8 @@ public class SimpleThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, 
     [SerializeField] private float maxThrust = 240f;
     [SerializeField] private bool isMaxSpeedClamped;
     [SerializeField] private float maxSpeed = 240f;
-    [SerializeField] private float airborneTresholdFactor = 3f;
-    [SerializeField] private float airborneMultiplyer = 2f;
+    [SerializeField] private float airborneTreshold = 3f;
+    [SerializeField] private float airborneSpeedDecreaseRate = 0.3f;
 
 
     [Header("Effects")]
@@ -35,13 +35,27 @@ public class SimpleThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, 
     }
 
     public void HandleGroundData(in GroundData groundData, float targetFlightHeight, float deltaTime)
-    {
-        HeightFactor = groundData.Hit? groundData.HitDistance / targetFlightHeight : airborneTresholdFactor;
+    {        
+        HeightFactor = groundData.Hit? groundData.HitDistance : airborneTreshold;
+        float distanceAboveThreshold = HeightFactor - airborneTreshold;
 
-        AirborneFactor = HeightFactor < airborneTresholdFactor ? 
-            Mathf.Clamp(airborneMultiplyer * (1 - HeightFactor / airborneTresholdFactor) + 1f, 0f, 1f) : 0f;
+        if (HeightFactor < airborneTreshold)
+        {
+            AirborneFactor = 1f;
+        }
+        else
+        {
+            AirborneFactor = Mathf.Clamp(1f - (distanceAboveThreshold * airborneSpeedDecreaseRate), 0f, 1f);
+        }
 
-        Thrust = Mathf.Clamp(TriggerValue * thrusterPower * AirborneFactor, 0f, maxThrust);
+        Thrust = thrusterPower * AirborneFactor;
+
+        //HeightFactor = groundData.Hit? groundData.HitDistance / targetFlightHeight : airborneTresholdFactor;
+
+        //    AirborneFactor = HeightFactor < airborneTresholdFactor ? 
+        //      Mathf.Clamp(airborneMultiplyer * (1 - HeightFactor / airborneTresholdFactor) + 1f, 0f, 1f) : 0f;
+
+        //Thrust = Mathf.Clamp(TriggerValue * thrusterPower * AirborneFactor, 0f, maxThrust);
     }
 
     // ISimulateable Method
@@ -51,9 +65,6 @@ public class SimpleThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, 
         {
             soundSystem.HandleSound(Thrust, deltaTime);
         }
-
-        //For Testing
-        Thrust = maxThrust;
 
         if (Thrust != 0f)
         {
@@ -70,7 +81,6 @@ public class SimpleThruster : MonoBehaviour, IReferenceRigidbody, IHandleInput, 
 
             PhysicsRigidbody.AddForce(Thrust * transform.up * deltaTime, ForceMode.Impulse);            
         }
-
     }
 
     // IReconsileFloat Methods
