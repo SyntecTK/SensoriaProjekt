@@ -9,6 +9,9 @@ public class PSMoveControllers : MonoBehaviour
 
     private const uint ApiVersion = 0x04000C;
 
+    // PSMove_Button aus psmove.h
+    private const uint BtnTriangle = 1u << 4;
+
     [Serializable]
     public class ControllerSlot
     {
@@ -19,8 +22,11 @@ public class PSMoveControllers : MonoBehaviour
 
         public UnityEvent onTriggerPressed = new UnityEvent();
 
+        public UnityEvent onTrianglePressed = new UnityEvent();
+
         [NonSerialized] public IntPtr handle;
         [NonSerialized] public bool triggerWasPressed;
+        [NonSerialized] public bool triangleWasPressed;
         [NonSerialized] public Vector3 originalScale;
     }
 
@@ -50,7 +56,11 @@ public class PSMoveControllers : MonoBehaviour
     private static extern byte psmove_get_trigger(IntPtr move);
 
     [DllImport(Library, CallingConvention = CallingConvention.Cdecl)]
+    private static extern uint psmove_get_buttons(IntPtr move);
+
+    [DllImport(Library, CallingConvention = CallingConvention.Cdecl)]
     private static extern void psmove_disconnect(IntPtr move);
+
 
     private void Start()
     {
@@ -90,6 +100,7 @@ public class PSMoveControllers : MonoBehaviour
                 }
 
                 slot.triggerWasPressed = false;
+                slot.triangleWasPressed = false;
                 slot.triggerValue = 0f;
 
                 if (slot.testObject != null)
@@ -133,6 +144,18 @@ public class PSMoveControllers : MonoBehaviour
                 }
 
                 slot.triggerWasPressed = pressed;
+
+                uint buttons = psmove_get_buttons(slot.handle);
+                bool trianglePressed = (buttons & BtnTriangle) != 0;
+
+                if (trianglePressed && !slot.triangleWasPressed)
+                {
+                    Debug.Log($"Controller {i + 1}: Dreieck gedrückt.");
+                    slot.onTrianglePressed.Invoke();
+                    EventManager.Calibrate();
+                }
+
+                slot.triangleWasPressed = trianglePressed;
             }
 
             if (slot.testObject != null)
