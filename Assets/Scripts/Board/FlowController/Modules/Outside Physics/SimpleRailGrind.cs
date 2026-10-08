@@ -8,6 +8,7 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
     [Header("Runtime Variables")]
     public bool CanGrind = false, IsGrinding;
     [SerializeField] private bool wantsToGrind, isTurningWithRail;
+    [SerializeField] private float rotationAngle, rotationTreshold = 90f;
     private Vector3 railDirection, flatRailDirection, lastFlatRailDirection;
 
     [Header("Settings")]
@@ -62,28 +63,56 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
 
     public void Simulate(float deltaTime)
     {
-        IsGrinding = CanGrind && wantsToGrind;
+        Vector3 newForce;
 
         if (IsGrinding)
         {
-            if (isTurningWithRail)
+            if (!CanGrind) // Getting off the rail
             {
-                PhysicsRigidbody.rotation *= Quaternion.FromToRotation(lastFlatRailDirection, flatRailDirection);
+                newForce = lastFlatRailDirection * grindBoostForce;
+            }
+            else
+            {
+                Vector3 accumulatedForce = PhysicsRigidbody.GetAccumulatedForce();
+
+                //Debug.Log("Accumulated Force: " + PhysicsRigidbody.GetAccumulatedForce());
+                //Debug.DrawRay(PhysicsRigidbody.position, railDirection * 10f, Color.green);
+
+                newForce = Vector3.Project(accumulatedForce, railDirection) + grindBoostForce * railDirection;
+
+                //Debug.DrawRay(PhysicsRigidbody.position, newForce * 10f, Color.red);
+
+                PhysicsRigidbody.linearVelocity = Vector3.zero;
+
+                //PhysicsRigidbody.AddForce(-PhysicsRigidbody.GetAccumulatedForce(), ForceMode.Acceleration);
             }
 
-            Vector3 accumulatedForce = PhysicsRigidbody.GetAccumulatedForce();
-
-            //Debug.Log("Accumulated Force: " + PhysicsRigidbody.GetAccumulatedForce());
-            //Debug.DrawRay(PhysicsRigidbody.position, railDirection * 10f, Color.green);
-
-            Vector3 newForce = Vector3.Project(accumulatedForce, railDirection) + grindBoostForce * railDirection;
-
-            //Debug.DrawRay(PhysicsRigidbody.position, newForce * 10f, Color.red);
-
-            PhysicsRigidbody.linearVelocity = Vector3.zero;
-
-            //PhysicsRigidbody.AddForce(-PhysicsRigidbody.GetAccumulatedForce(), ForceMode.Acceleration);
             PhysicsRigidbody.AddForce(newForce, ForceMode.Impulse);
         }
+
+        if (isTurningWithRail)
+        {
+            float newRotation = Mathf.Abs(Vector3.SignedAngle(lastFlatRailDirection, flatRailDirection, Vector3.up));
+            Vector3 newGoalDirection;
+
+            if(rotationAngle != 0f && rotationAngle + newRotation > Mathf.Abs(rotationTreshold))
+            {
+                float a = 90f - rotationAngle;
+                float f =  a / rotationAngle;
+
+                newGoalDirection = Vector3.Slerp(lastFlatRailDirection, flatRailDirection, f);
+
+                rotationAngle = 0f;
+            }
+            else
+            {
+                newGoalDirection = flatRailDirection;
+                rotationAngle += newRotation;
+            }
+
+            PhysicsRigidbody.rotation *= Quaternion.FromToRotation(lastFlatRailDirection, newGoalDirection);
+        }
+
+        IsGrinding = CanGrind && wantsToGrind;
     }
 }
