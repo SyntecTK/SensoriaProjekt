@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class Rail : MonoBehaviour
 {
+    [Header("Runtime Variables")]
     public Vector3 railDirection, originPoint;
     [SerializeField] private bool railFlipped;
-    [SerializeField] private float rotationSpeed;
     private Transform playerTransform;
     private SimpleRailGrind railGrind;
+
+    [Header("Settings")]
+    [Tooltip("If true, the rail will rotate around its own axis. If false, the rail will stay in place.")]
+    [SerializeField] private bool isPole;
 
     private void Awake()
     {
@@ -21,10 +25,10 @@ public class Rail : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //transform.Rotate(Vector3.up, rotationSpeed * Time.fixedDeltaTime);
-
-        CalculateRailDirection();
-
+        if (isPole)
+        {
+            CalculateRailDirection();
+        }
 
         if (playerTransform != null)
         {
@@ -41,7 +45,10 @@ public class Rail : MonoBehaviour
             var newRailGrind = other.gameObject.GetComponentInChildren<SimpleRailGrind>();
             railGrind = newRailGrind;
 
-            CalculateRailDirection();
+            if (isPole)
+            {
+                CalculateRailDirection();
+            }
 
             railFlipped = playerTransform.InverseTransformDirection(railDirection).z < 0f;
 
@@ -70,5 +77,4 @@ public class Rail : MonoBehaviour
             Debug.DrawRay(originPoint, railDirection * 10f, Color.green);
         }
     }
-
 }

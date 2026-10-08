@@ -6,7 +6,7 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
     [SerializeField] private GetGamepadParameter inputLogic = new GetGamepadParameter();
 
     [Header("Runtime Variables")]
-    public bool CanGrind = false, IsGrinding;
+    public bool CanGrind = false, IsGrinding, IsRotating;
     [SerializeField] private bool wantsToGrind, isTurningWithRail;
     [SerializeField] private float rotationAngle, rotationTreshold = 90f;
     private Vector3 railDirection, flatRailDirection, lastFlatRailDirection;
@@ -50,13 +50,17 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
     public void UpdateRail(bool isOnRail, bool _isTurningWithRail, Vector3 newRailDirection = default)
     {
         CanGrind = isOnRail;
-        isTurningWithRail = _isTurningWithRail;
-
+        
         if (_isTurningWithRail)
         {
+            if (wantsToGrind && CanGrind) IsRotating = true;
+
             flatRailDirection = new Vector3(newRailDirection.x, 0f, newRailDirection.z).normalized;
             lastFlatRailDirection = new Vector3(railDirection.x, 0f, railDirection.z).normalized;
         }
+
+        //Debug Only
+        isTurningWithRail = _isTurningWithRail;
 
         railDirection = newRailDirection;
     }
@@ -90,19 +94,20 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
             PhysicsRigidbody.AddForce(newForce, ForceMode.Impulse);
         }
 
-        if (isTurningWithRail)
+        if (IsRotating)
         {
             float newRotation = Mathf.Abs(Vector3.SignedAngle(lastFlatRailDirection, flatRailDirection, Vector3.up));
             Vector3 newGoalDirection;
 
-            if(rotationAngle != 0f && rotationAngle + newRotation > Mathf.Abs(rotationTreshold))
+            if (newRotation != 0f && rotationAngle + newRotation > Mathf.Abs(rotationTreshold))
             {
                 float a = 90f - rotationAngle;
-                float f =  a / rotationAngle;
+                float f =  a / newRotation;
 
                 newGoalDirection = Vector3.Slerp(lastFlatRailDirection, flatRailDirection, f);
 
                 rotationAngle = 0f;
+                IsRotating = false;
             }
             else
             {
