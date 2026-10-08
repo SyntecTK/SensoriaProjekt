@@ -14,15 +14,19 @@ public class BoardCollisionHandler : MonoBehaviour, IReferenceRigidbody
     [Header("Components")]
     public Rigidbody PhysicsRigidbody { get; set; }
 
+    private AudioSource audioSource;
+
 
     void Awake()
     {
 
         PhysicsRigidbody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision c)
     {
+        audioSource.Play();
         HandleCollision(c, true);
     }
 
@@ -47,7 +51,7 @@ public class BoardCollisionHandler : MonoBehaviour, IReferenceRigidbody
         Vector3 normalVel = Vector3.Project(v, n);
         Vector3 tangentVel = v - normalVel;
 
-        // Normalen-Anteil stark dämpfen (kein Abprallen)
+        // Normalen-Anteil stark dï¿½mpfen (kein Abprallen)
         normalVel *= normalDamping;
 
         // Tangentialen Anteil behalten (Gleiten)
@@ -55,7 +59,7 @@ public class BoardCollisionHandler : MonoBehaviour, IReferenceRigidbody
 
         PhysicsRigidbody.linearVelocity = tangentVel + normalVel;
 
-        // Rotationsdämpfung nur bei Impact
+        // Rotationsdï¿½mpfung nur bei Impact
         if (impact)
         {
             Vector3 av = PhysicsRigidbody.angularVelocity;

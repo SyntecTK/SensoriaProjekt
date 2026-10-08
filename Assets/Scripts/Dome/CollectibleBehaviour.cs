@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectibleBehaviour : MonoBehaviour
@@ -6,6 +7,9 @@ public class CollectibleBehaviour : MonoBehaviour
     [Header("HoverSettings")]
     [SerializeField] private float hoverHeight = 0.5f; // maximum height of the hover
     [SerializeField] private float hoverSpeed = 2f; // speed of the hover
+
+    [Header("Audio")]
+    [SerializeField] private List<AudioClip> collectibleSounds;
 
     private AudioSource audioSource;
     private Vector3 startPosition;
@@ -44,7 +48,11 @@ public class CollectibleBehaviour : MonoBehaviour
     {
         GameManager.Instance.CollectibleCollected();
 
-        audioSource.Play();
+        if(collectibleSounds.Count > 0)
+        {
+            audioSource.clip = collectibleSounds[Random.Range(0, collectibleSounds.Count)];
+            audioSource.Play();
+        }
         meshRenderer.enabled = false;
 
         yield return new WaitForSeconds(1);

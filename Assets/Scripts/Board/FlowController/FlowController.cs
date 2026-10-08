@@ -38,14 +38,32 @@ public class FlowController : MonoBehaviour, IReposition, IReferenceRigidbody
     GroundDataDelegate OnGroundDataUpdated;
     public Action<float> OnSimulate;
 
+    // movement lock (e.g. during the intro sequence)
+    private bool isMovementLocked = false;
+    private bool isFrozenByLock = false;
+
     private void OnEnable()
     {
         EventManager.OnWallrideStarted += HandleWallrideStarted;
+        EventManager.OnRoundStarted += LockMovement;
+        EventManager.OnIntroEnded += UnlockMovement;
     }
 
     private void OnDisable()
     {
         EventManager.OnWallrideStarted -= HandleWallrideStarted;
+        EventManager.OnRoundStarted -= LockMovement;
+        EventManager.OnIntroEnded -= UnlockMovement;
+    }
+
+    private void LockMovement()
+    {
+        isMovementLocked = true;
+    }
+
+    private void UnlockMovement()
+    {
+        isMovementLocked = false;
     }
 
     private void HandleWallrideStarted()
@@ -172,6 +190,24 @@ public class FlowController : MonoBehaviour, IReposition, IReferenceRigidbody
         {
             Debug.LogError("PhysicsRigidbody is null");
             return;
+        }
+
+        // Freeze the board while movement is locked
+        if (isMovementLocked)
+        {
+            if (!isFrozenByLock)
+            {
+                PhysicsRigidbody.linearVelocity = Vector3.zero;
+                PhysicsRigidbody.angularVelocity = Vector3.zero;
+                PhysicsRigidbody.isKinematic = true;
+                isFrozenByLock = true;
+            }
+            return;
+        }
+        if (isFrozenByLock)
+        {
+            PhysicsRigidbody.isKinematic = false;
+            isFrozenByLock = false;
         }
 
         // Process Input
