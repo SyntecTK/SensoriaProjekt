@@ -104,6 +104,7 @@ Transform:
   - {fileID: 4669749735466209761}
   - {fileID: 2256857412987607438}
   - {fileID: 1359039105152276251}
+  - {fileID: 7325736520044364415}
   - {fileID: 6057798024571298522}
   - {fileID: 8116324009983713856}
   - {fileID: 4618703033536948767}
@@ -709,6 +710,7 @@ MonoBehaviour:
   - {fileID: 3326477514458107716}
   - {fileID: 7220613874550071789}
   - {fileID: 57338403057610064}
+  - {fileID: 5378355356723951172}
 --- !u!54 &3902175262215652379
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -718,7 +720,7 @@ Rigidbody:
   m_GameObject: {fileID: 3685828113321334149}
   serializedVersion: 5
   m_Mass: 5
-  m_LinearDamping: 0.02
+  m_LinearDamping: 1
   m_AngularDamping: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -872,6 +874,8 @@ MonoBehaviour:
   PitchStickAxis: 2
   YawStickAxis: 3
   RollStickAxis: 1
+  phoneBackDirection: {x: 0, y: 1, z: 0}
+  phoneTopDirection: {x: -1, y: 0, z: 0}
 --- !u!1 &4292199165803404505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,7 +1054,7 @@ MonoBehaviour:
   AirborneFactor: 0
   Thrust: 0
   usesLeftTrigger: 1
-  thrusterPower: 120
+  thrusterPower: 30
   maxThrust: 2500
   isMaxSpeedClamped: 1
   maxSpeed: 20
@@ -1260,6 +1264,61 @@ Transform:
   - {fileID: 4961560552512717351}
   m_Father: {fileID: 6240917017176567023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5378355356723951172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7325736520044364415}
+  - component: {fileID: 7431840978983736008}
+  m_Layer: 2
+  m_Name: Simple Rail Grind
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7325736520044364415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5378355356723951172}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3569994536232770559}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7431840978983736008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5378355356723951172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28ac7d736173884d9f93b4f75918c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleRailGrind
+  CanGrind: 0
+  IsGrinding: 0
+  IsRotating: 0
+  wantsToGrind: 0
+  isTurningWithRail: 0
+  rotationAngle: 0
+  rotationTreshold: 90
+  grindButton: 0
+  autoGrind: 1
+  holdButtonToGrind: 1
+  grindBoostForce: 5
 --- !u!1 &5601120086923133204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,7 +1529,7 @@ MonoBehaviour:
   spawnRotationOffset: {x: 0, y: 0, z: 0, w: 1}
   cameraPosition: {x: 0, y: 0, z: 0}
   cameraRotation: {x: 0, y: 0, z: 0, w: 1}
-  teleportButton: 11
+  teleportButton: 5
   holdTimeToTeleport: 0.7
   doublePressTimeToSetCheckpoint: 0.5
 --- !u!1 &6941270328255641322
@@ -2038,9 +2097,9 @@ MonoBehaviour:
   thrusterPower: 240
   maxThrust: 240
   isMaxSpeedClamped: 1
-  maxSpeed: 35
-  airborneTresholdFactor: 3
-  airborneMultiplyer: 2
+  maxSpeed: 10
+  airborneTreshold: 4
+  airborneSpeedDecreaseRate: 0.5
   thrusterEffect: {fileID: 0}
   soundSystem: {fileID: 1293270136504727566}
 --- !u!114 &1293270136504727566
@@ -2336,7 +2395,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a90b012adf92d04082dee8c23bb19b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4135621408938960348}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6954984082630255798, guid: 2a90b012adf92d04082dee8c23bb19b7, type: 3}
       insertIndex: -1
@@ -2386,4 +2448,82 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a90b012adf92d04082dee8c23bb19b7, type: 3}
   m_PrefabInstance: {fileID: 4850861088564176332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7013288312010526164
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4961560552512717351}
+    m_Modifications:
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.497
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.238
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534227293971269808, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_Name
+      value: Hoverboard Retopo'd
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534227293971269808, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+--- !u!4 &4135621408938960348 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6354747631780489224, guid: 1c55fe071e16f8f439b05f1e10fc6f4a, type: 3}
+  m_PrefabInstance: {fileID: 7013288312010526164}
   m_PrefabAsset: {fileID: 0}
