@@ -38,6 +38,21 @@ public class FlowController : MonoBehaviour, IReposition, IReferenceRigidbody
     GroundDataDelegate OnGroundDataUpdated;
     public Action<float> OnSimulate;
 
+    private void OnEnable()
+    {
+        EventManager.OnWallrideStarted += HandleWallrideStarted;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnWallrideStarted -= HandleWallrideStarted;
+    }
+
+    private void HandleWallrideStarted()
+    {
+        
+    }
+
 
     #region Initialize
     public void Initialize(bool offline = false)

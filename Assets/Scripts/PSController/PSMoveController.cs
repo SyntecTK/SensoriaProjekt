@@ -12,6 +12,8 @@ public class PSMoveControllers : MonoBehaviour
     // PSMove_Button aus psmove.h
     private const uint BtnTriangle = 1u << 4;
 
+    [Serializable] public class IntEvent : UnityEvent<int> {}
+
     [Serializable]
     public class ControllerSlot
     {
@@ -20,7 +22,7 @@ public class PSMoveControllers : MonoBehaviour
         [Range(0f, 1f)]
         public float triggerValue;
 
-        public UnityEvent onTriggerPressed = new UnityEvent();
+        public IntEvent onTriggerPressed = new IntEvent();
 
         public UnityEvent onTrianglePressed = new UnityEvent();
 
@@ -140,7 +142,7 @@ public class PSMoveControllers : MonoBehaviour
                 if (pressed && !slot.triggerWasPressed)
                 {
                     Debug.Log($"Controller {i + 1}: Trigger gedrückt.");
-                    slot.onTriggerPressed.Invoke();
+                    slot.onTriggerPressed.Invoke(i);
                 }
 
                 slot.triggerWasPressed = pressed;
