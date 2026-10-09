@@ -103,6 +103,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dose.002 (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -176,6 +184,14 @@ PrefabInstance:
     - target: {fileID: 697316426937651837, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
       propertyPath: m_Name
       value: Dose.002 (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -251,6 +267,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dose.002 (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -269,6 +293,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5039665821452259956}
     m_Modifications:
+    - target: {fileID: 7998181841048033752, guid: d95631047347a5140be609f74a293371, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998181841048033752, guid: d95631047347a5140be609f74a293371, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8400343301699434231, guid: d95631047347a5140be609f74a293371, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.6894001
@@ -399,6 +431,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dose.002 (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -472,6 +512,14 @@ PrefabInstance:
     - target: {fileID: 697316426937651837, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
       propertyPath: m_Name
       value: Dose.002 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -547,6 +595,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dose.002 (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -620,6 +676,14 @@ PrefabInstance:
     - target: {fileID: 697316426937651837, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
       propertyPath: m_Name
       value: Dose.002 (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019550938959116495, guid: f08b71d1c5fc4ec42b18bf1c1793f6e3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
