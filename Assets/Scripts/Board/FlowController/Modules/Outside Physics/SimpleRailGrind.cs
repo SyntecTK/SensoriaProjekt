@@ -9,6 +9,7 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
     public bool CanGrind = false, IsGrinding, IsRotating;
     [SerializeField] private bool wantsToGrind, isTurningWithRail;
     [SerializeField] private float rotationAngle, rotationTreshold = 90f;
+    [SerializeField] private Transform rotationTransform;
     private Vector3 railDirection, flatRailDirection, lastFlatRailDirection;
 
     [Header("Settings")]
@@ -45,6 +46,11 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
             //    wantsToGrind = IsGrinding ? false : true;
             //}
         }
+    }
+
+    public void SetRotationTransform(Transform rotationTransform = null)
+    {
+        this.rotationTransform = rotationTransform;
     }
 
     public void UpdateRail(bool isOnRail, bool _isTurningWithRail, Vector3 newRailDirection = default)
@@ -94,9 +100,11 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
             PhysicsRigidbody.AddForce(newForce, ForceMode.Impulse);
         }
 
+        float newRotation = 0f;
+
         if (IsRotating)
         {
-            float newRotation = Mathf.Abs(Vector3.SignedAngle(lastFlatRailDirection, flatRailDirection, Vector3.up));
+            newRotation = Mathf.Abs(Vector3.SignedAngle(lastFlatRailDirection, flatRailDirection, Vector3.up));
             Vector3 newGoalDirection;
 
             if (newRotation != 0f && rotationAngle + newRotation > Mathf.Abs(rotationTreshold))
@@ -108,6 +116,9 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
 
                 rotationAngle = 0f;
                 IsRotating = false;
+
+                rotationTransform.localEulerAngles = new Vector3(rotationTransform.localEulerAngles.x, rotationTransform.localEulerAngles.y + a, rotationTransform.localEulerAngles.z);
+                rotationTransform = null;
             }
             else
             {
@@ -115,7 +126,9 @@ public class SimpleRailGrind : MonoBehaviour, IReferenceRigidbody, IHandleInput,
                 rotationAngle += newRotation;
             }
 
-            PhysicsRigidbody.rotation *= Quaternion.FromToRotation(lastFlatRailDirection, newGoalDirection);
+            if (rotationTransform != null) rotationTransform.localEulerAngles = new Vector3(rotationTransform.localEulerAngles.x, rotationTransform.localEulerAngles.y + newRotation, rotationTransform.localEulerAngles.z);
+
+            //PhysicsRigidbody.rotation *= Quaternion.FromToRotation(lastFlatRailDirection, newGoalDirection);
         }
 
         IsGrinding = CanGrind && wantsToGrind;

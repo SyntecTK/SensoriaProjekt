@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Rail : MonoBehaviour
 {
     [Header("Runtime Variables")]
     public Vector3 railDirection, originPoint;
     [SerializeField] private bool railFlipped;
+    [SerializeField] private ParentConstraint worldParentConstraint;
     private Transform playerTransform;
     private SimpleRailGrind railGrind;
 
@@ -16,6 +18,7 @@ public class Rail : MonoBehaviour
     {
         railDirection = transform.forward;
         originPoint = transform.position;
+        worldParentConstraint = GetComponentInParent<ParentConstraint>();
     }
 
     public Vector3 GetRailDirection(Vector3 position = default)
@@ -52,7 +55,24 @@ public class Rail : MonoBehaviour
 
             railFlipped = playerTransform.InverseTransformDirection(railDirection).z < 0f;
 
-            if (newRailGrind != null) { newRailGrind.UpdateRail(true, true, railFlipped ? -railDirection : railDirection); }
+            if (newRailGrind != null) 
+            {
+                newRailGrind.SetRotationTransform(transform);
+                newRailGrind.UpdateRail(true, true, railFlipped ? -railDirection : railDirection); 
+            }
+        }
+
+        transform.SetParent(null);
+
+        if (worldParentConstraint != null)
+        {
+            worldParentConstraint.transform.parent = transform;
+
+            //if (worldParentConstraint.sourceCount > 0)
+            //{
+            //    worldParentConstraint.RemoveSource(0);
+            //}
+            //worldParentConstraint.AddSource(new ConstraintSource { sourceTransform = this.transform, weight = 1f });
         }
     }
 
