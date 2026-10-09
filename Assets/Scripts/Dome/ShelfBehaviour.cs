@@ -24,21 +24,18 @@ public class ShelfBehaviour : MonoBehaviour
         {
             rb.isKinematic = false;
             rb.AddForce(
-                rb.transform.right * boostForce * 10f + rb.transform.up * boostForce,
+                rb.transform.right * boostForce * 5f + rb.transform.up * boostForce,
                 ForceMode.Impulse);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player") && !boosted)
         {
+            boosted = true;
             Debug.Log("Player collided with shelf");
-            if(!boosted)
-            {
-                BoostItems();
-                boosted = true;
-            }
+            BoostItems();
         }
     }
 }

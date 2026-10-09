@@ -13,33 +13,50 @@ public class CollectibleBehaviour : MonoBehaviour
 
     private AudioSource audioSource;
     private Vector3 startPosition;
-    private MeshRenderer meshRenderer;
+    private Renderer[] renderers;
+    private Rigidbody rb;
+    private bool collected;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        renderers = GetComponentsInChildren<Renderer>(true);
         startPosition = transform.position;
+
+        // moving trigger needs a kinematic rigidbody, otherwise it is treated as a static collider and trigger events arrive late
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     private void HoverAnimation()
     {
         float hoverOffset = Mathf.Sin(Time.time * hoverSpeed) * hoverHeight;
-        transform.position = startPosition + Vector3.up * hoverOffset;
+        rb.MovePosition(startPosition + Vector3.up * hoverOffset);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         HoverAnimation();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !collected)
         {
             BoxCollider coll = GetComponent<BoxCollider>();
             coll.enabled = false;
+            foreach (Renderer r in renderers)
+            {
+                r.enabled = false;
+            }
             Debug.Log("Player entered collectible trigger");
+            collected = true;
             StartCoroutine(Collect());
         }
     }
@@ -53,7 +70,7 @@ public class CollectibleBehaviour : MonoBehaviour
             audioSource.clip = collectibleSounds[Random.Range(0, collectibleSounds.Count)];
             audioSource.Play();
         }
-        meshRenderer.enabled = false;
+       
 
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
