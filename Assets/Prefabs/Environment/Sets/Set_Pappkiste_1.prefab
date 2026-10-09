@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 2634986109800213995}
   - component: {fileID: -5928848962631925557}
   - component: {fileID: -1010487721525889172}
+  - component: {fileID: 8295627370112554745}
   m_Layer: 0
   m_Name: Kiste_Pappe
   m_TagString: Untagged
@@ -570,6 +571,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6070925077760743853, guid: f275d757bfad007469f131ae0541ed92, type: 3}
+--- !u!114 &8295627370112554745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4580624367193771070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9fa283014a45d4fbd0a497c80ed15d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShelfBehaviour
+  boostForce: 10
 --- !u!1 &5389670332344276439
 GameObject:
   m_ObjectHideFlags: 0

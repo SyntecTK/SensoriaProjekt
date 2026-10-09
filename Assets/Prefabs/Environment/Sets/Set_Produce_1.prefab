@@ -1280,6 +1280,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9149565224920575974}
     m_Modifications:
+    - target: {fileID: -8089290670886687572, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
+      propertyPath: m_Mass
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8089290670886687572, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8089290670886687572, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3748472062095465639, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
       propertyPath: m_Name
       value: Lauch
@@ -3556,6 +3568,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9149565224920575974}
     m_Modifications:
+    - target: {fileID: -8089290670886687572, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
+      propertyPath: m_Mass
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8089290670886687572, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8089290670886687572, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3748472062095465639, guid: c34ddbc9ad2fe8c4791d09d7b87a0d81, type: 3}
       propertyPath: m_Name
       value: Lauch (1)
