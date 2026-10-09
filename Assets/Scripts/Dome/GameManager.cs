@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     private int currentCollectibles = 0;
     public int CurrentCollectibles => currentCollectibles;
     private float remainingTime;
+    private readonly Dictionary<Rigidbody, bool> originalKinematicStates = new Dictionary<Rigidbody, bool>();
 
     private void OnEnable()
     {
@@ -64,6 +66,32 @@ public class GameManager : MonoBehaviour
     public float GetRemainingTime()
     {
         return Mathf.Max(0, remainingTime);
+    }
+
+    public void SetAllRigidbodiesKinematic(bool isKinematic)
+    {
+        Rigidbody[] rigidbodies = FindObjectsByType<Rigidbody>();
+        foreach (var rb in rigidbodies)
+        {
+            // Nur den ersten Wert merken, damit mehrfaches Setzen den Ursprungswert nicht überschreibt
+            if (!originalKinematicStates.ContainsKey(rb))
+            {
+                originalKinematicStates[rb] = rb.isKinematic;
+            }
+            rb.isKinematic = isKinematic;
+        }
+    }
+
+    public void ResetAllRigidbodyKinematics()
+    {
+        foreach (var entry in originalKinematicStates)
+        {
+            if (entry.Key != null)
+            {
+                entry.Key.isKinematic = entry.Value;
+            }
+        }
+        originalKinematicStates.Clear();
     }
 
     IEnumerator RoundTimer()
