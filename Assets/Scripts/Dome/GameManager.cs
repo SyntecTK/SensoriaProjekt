@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     IEnumerator RoundTimer()
     {
         remainingTime = roundTimeInSeconds;
-        
+
         while (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
@@ -82,6 +82,6 @@ public class GameManager : MonoBehaviour
     IEnumerator ResetGame()
     {
         yield return new WaitForSeconds(resetDelay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("MainMenu");
     }
 }

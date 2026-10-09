@@ -99,7 +99,7 @@ public class MainMenuController : MonoBehaviour
         canvasGroup.interactable = false;
         if (music) StartCoroutine(music.Fade(0f, moveDuration));
         yield return Animate(currentPanel, false);
-        SceneManager.LoadScene(gameSceneName);
+        SceneManager.LoadScene("SampleScene");
     }
 
     void OnQuit()
