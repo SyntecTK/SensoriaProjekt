@@ -20,6 +20,9 @@ public class MenuButtonHover : MonoBehaviour,
     RectTransform rect;
     float intensity, target, phase;
 
+    public static event System.Action<Color> HoverStarted;
+    public static event System.Action HoverEnded;
+
     void Awake()
     {
         src = GetComponent<Image>();
@@ -68,11 +71,18 @@ public class MenuButtonHover : MonoBehaviour,
         mat.SetFloat("_Intensity", intensity);
     }
 
+    void SetHover(bool on)
+    {
+        target = on ? 1f : 0f;
+        if (on) HoverStarted?.Invoke(outlineColor);
+        else HoverEnded?.Invoke();
+    }
+
     void OnDisable() { target = 0f; intensity = 0f; }
     void OnDestroy() { if (mat) Destroy(mat); }
 
-    public void OnPointerEnter(PointerEventData e) => target = 1f;
-    public void OnPointerExit(PointerEventData e) => target = 0f;
-    public void OnSelect(BaseEventData e) => target = 1f;
-    public void OnDeselect(BaseEventData e) => target = 0f;
+    public void OnPointerEnter(PointerEventData e) => SetHover(true);
+    public void OnPointerExit(PointerEventData e) => SetHover(false);
+    public void OnSelect(BaseEventData e) => SetHover(true);
+    public void OnDeselect(BaseEventData e) => SetHover(false);
 }
