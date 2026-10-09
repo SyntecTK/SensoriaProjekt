@@ -7,6 +7,7 @@ public static class EventManager
     public static event Action OnRoundStarted;
     public static event Action OnIntroEnded;
     public static event Action OnWallrideStarted;
+    public static event Action OnGameEnd;
 
     public static void Calibrate()
     {
@@ -31,5 +32,10 @@ public static class EventManager
     public static void WallrideStarted()
     {
         OnWallrideStarted?.Invoke();
+    }
+
+    public static void GameEnded()
+    {
+        OnGameEnd?.Invoke();
     }
 }

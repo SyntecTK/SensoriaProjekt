@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5850806715233790984}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -521541946066309914, guid: b4a800f01d58e7e4fb88079c8ffcb3ee, type: 3}
 --- !u!23 &6632418678603801190
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -52,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5850806715233790984}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -294,6 +294,10 @@ PrefabInstance:
     - target: {fileID: 3043485993688882808, guid: 4d98f4050e50ee64face9c49e291e8a5, type: 3}
       propertyPath: m_Name
       value: KrawallHomie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3043485993688882808, guid: 4d98f4050e50ee64face9c49e291e8a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

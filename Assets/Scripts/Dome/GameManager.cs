@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private int roundTimeInSeconds;
     [SerializeField] private int totalCollectibles;
+    [SerializeField] private float resetDelay = 10f;
+
     private int currentCollectibles = 0;
     public int CurrentCollectibles => currentCollectibles;
     private float remainingTime;
@@ -66,11 +69,19 @@ public class GameManager : MonoBehaviour
     IEnumerator RoundTimer()
     {
         remainingTime = roundTimeInSeconds;
+        
         while (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
             yield return null;
         }
-        // Round ended, handle end of round logic here
+
+        EventManager.GameEnded();
+        StartCoroutine(ResetGame());
+    }
+    IEnumerator ResetGame()
+    {
+        yield return new WaitForSeconds(resetDelay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
