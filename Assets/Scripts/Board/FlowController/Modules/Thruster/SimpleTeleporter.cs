@@ -34,7 +34,7 @@ public class SimpleTeleporter : MonoBehaviour, IHandleInput, IHandleRigidbodyDat
         "13 = Start Button, 14 = Select Button\r\n " +
         "15 = Left Trigger, 16 = Right Trigger\r\n " +
         "17 = Left Stick X, 18 = Left Stick Y, 19 = Right Stick X, 20 = Right Stick Y")]
-    [SerializeField] private int teleportButton = 11;
+    [SerializeField] private int teleportButton = 20;
     [SerializeField] private float holdTimeToTeleport = 0.7f;
     [SerializeField] private float doublePressTimeToSetCheckpoint = 0.5f;
 
@@ -105,6 +105,8 @@ public class SimpleTeleporter : MonoBehaviour, IHandleInput, IHandleRigidbodyDat
 
     private void Awake()
     {
+        //TeleportToCheckpoint();
+
         if (referenceTransform == null)
         {
             referenceTransform = transform;
