@@ -35,7 +35,7 @@ public class SimpleRotater : MonoBehaviour, IReferenceRigidbody, IHandleInput, I
     [Header("Phone Roll Steering")]
     [SerializeField] private float rollDeadzone = 2f;
     [SerializeField] private float maxSteerRoll = 25f;
-    [SerializeField] private float maxTurnRate = 180f;
+    [SerializeField] private float maxTurnRate = 140f;
     [SerializeField] private float steerExponent = 1.2f;
     [SerializeField] private float steerResponse = 6f;
     [SerializeField] private float lateralForce = 30f;
