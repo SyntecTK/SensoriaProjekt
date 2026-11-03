@@ -647,7 +647,7 @@ Transform:
   m_GameObject: {fileID: 3685828113321334149}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.20975, z: 1}
+  m_LocalPosition: {x: -56.36, y: 0.769, z: -20.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -877,6 +877,19 @@ MonoBehaviour:
   RollStickAxis: 1
   phoneBackDirection: {x: 0, y: 1, z: 0}
   phoneTopDirection: {x: -1, y: 0, z: 0}
+  backwardPitchMultiplier: 4
+  forwardPitchMultiplier: 1
+  maxPitch: 85
+  maxBackwardPitch: 60
+  rollDeadzone: 2
+  maxSteerRoll: 25
+  maxTurnRate: 140
+  steerExponent: 1.2
+  steerResponse: 6
+  lateralForce: 30
+  velocityGrip: 1
+  steerYaw: 0
+  currentTurnRate: 0
 --- !u!1 &4292199165803404505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,6 +1329,7 @@ MonoBehaviour:
   isTurningWithRail: 0
   rotationAngle: 0
   rotationTreshold: 90
+  rotationTransform: {fileID: 0}
   grindButton: 0
   autoGrind: 1
   holdButtonToGrind: 1
